@@ -72,14 +72,14 @@ const libraryController = {
         if (!errors.isEmpty()) {
             console.log(errors.array());
         }
-        const userId = req.params.userId;
+        // const userId = req.params.userId
+        const userId = req.body.userId;
         library_model_1.Library.find({ userId: userId }).then(booksBorrowed => {
             if (booksBorrowed.length === 5) {
                 const error = new Error('You have already borrowed 5 books.');
                 throw error;
             }
             const bookId = req.body.bookId;
-            const userId = req.body.userId;
             const returnDate = req.body.returnDate;
             const borrowNewBook = new library_model_1.Library({
                 bookId: bookId,
@@ -88,6 +88,14 @@ const libraryController = {
                 returnDate: returnDate
             });
             return borrowNewBook.save().then(result => {
+                const returnDate = req.body.returnDate;
+                book_model_1.Book.findOne({ bookId: bookId }).then(book => {
+                    if (book != null) {
+                        book.available = false;
+                        book.nextAvailableDate = returnDate;
+                        return book.save();
+                    }
+                });
                 res.status(201).json({ message: 'Book borrowed successfully!', Book: result });
             });
         });
