@@ -2,19 +2,22 @@ import { NextFunction, Response, Request } from "express";
 // import {  Error } from "../models/interfaces/request";
 import { Error } from "mongoose";
 const jwt = require('jsonwebtoken');
+let userInSession!: string;
 
 const isAuthMiddle = async (req : Request, res: Response, next: NextFunction) => {
   try{
     const token = req.header('Authorization');
-    const decodedToken = jwt.verify(token, 'somesupersecretsecret');
-    console.log(decodedToken);
-    // console.log(decodedToken['email']);
-    
+    // console.log("Inside auth check", token);
+    // const decodedToken = jwt.verify(token, 'somesupersecretsecret');
+    const decodedToken = jwt.verify(token?.split(' ')[1], 'somesupersecretsecret');
+    // console.log(decodedToken);
+    console.log(decodedToken['role']);
+    userInSession = decodedToken['userId'];
     next();
   }catch(err){
     console.log(err)
     const error = new Error('Not authenticated');
-    throw error;
+    // throw error;
   }
 }
 

@@ -57,7 +57,7 @@ const authController  = {
 
 
     login(req : Request, res: Response, next: NextFunction) {
-
+      console.log("inside login")
         const email = req.body.email;
         const password = req.body.password;
         let loadedUser: any = null;
@@ -65,7 +65,6 @@ const authController  = {
           .then(user => {
             if (!user) {
               const error = new Error('A user with this email could not be found.');
-            //   error.statusCode = 401;
               throw error;
             }
             loadedUser = user.toObject();
@@ -74,19 +73,19 @@ const authController  = {
           .then(isEqual => {
             if (!isEqual) {
               const error = new Error('Wrong password!');
-            //   error.statusCode = 401;
               throw error;
             }
             console.log(isEqual);
             const token = Jwt.sign(
               {
                 email: loadedUser.email,
-                userId: loadedUser._id.toString()
+                userId: loadedUser.userId,
+                role: loadedUser.role
               },
               'somesupersecretsecret',
               { expiresIn: '1h' }
             );
-            res.status(200).json({ token: token, userId: loadedUser._id.toString() });
+            res.status(200).json({ token: token, expiresIn: '1h' , userId: loadedUser.userId, role: loadedUser.role, email:loadedUser.email});
           })
           .catch(err => {
             if (!err.statusCode) {

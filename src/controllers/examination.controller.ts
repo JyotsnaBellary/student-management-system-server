@@ -1,6 +1,9 @@
 import { validationResult } from "express-validator";
 import { NextFunction, Request, Response } from "express";
 import { Examination } from "../models/examinationDetails.model";
+import { Invigilation } from "../models/invigilationDetails.model";
+import { UserDetails } from "../models/userDetails.model";
+const jwt = require('jsonwebtoken');
 
 const examinationController = {
     addExamination(req : Request, res: Response, next: NextFunction) {
@@ -50,21 +53,46 @@ const examinationController = {
         if (!errors.isEmpty()) {
             console.log(errors.array())
         }
-        const Class = req.params.Class;
-        Examination.find({Class : Class}).then(ExaminationDetails => {
-            if(!ExaminationDetails){
-                const error = new Error('Could not find Examination details for this class.');
-                // error.statusCode = 404;
-                throw error;
-            }
-            res.status(200).json({ message: 'Examination details fetched.', ExaminationDetails: ExaminationDetails });
-        })
-        .catch(err => {
-            if (!err.statusCode) {
-              err.statusCode = 500;
-            }
-            next(err);
-        });
+        const token = req.header('Authorization');
+        const decodedToken = jwt.verify(token?.split(' ')[1], 'somesupersecretsecret');
+        const userId = decodedToken['userId'];
+        
+        if(decodedToken['role'] === "student"){
+            UserDetails.findOne({userId:userId}).then(userDetails => {
+                Examination.find({Class : userDetails?.Class}).then(ExaminationDetails => {
+                    if(!ExaminationDetails){
+                        const error = new Error('Could not find Examination details for this class.');
+                        // error.statusCode = 404;
+                        throw error;
+                    }
+                    res.status(200).json({ message: 'Examination details fetched.', ExaminationDetails: ExaminationDetails });
+                })
+            })
+            .catch(err => {
+                if (!err.statusCode) {
+                  err.statusCode = 500;
+                }
+                next(err);
+            });
+        }
+        else if(decodedToken['role'] === "teacher"){
+            Invigilation.find({teacherId:userId}).then(InvigilationDetails => {
+                if (!InvigilationDetails) {
+                    const error = new Error('Could not find invigilation details for this id.');
+                    // error.statusCode = 404;
+                    throw error;
+                  }
+                  res.status(200).json({ message: 'Invigilation details fetched.', InvigilationDetails: InvigilationDetails });
+                })
+                .catch(err => {
+                  if (!err.statusCode) {
+                    err.statusCode = 500;
+                  }
+                  next(err);
+                }
+            );
+        }
+        
 
     },
 

@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const auth_1 = __importDefault(require("../controllers/auth"));
+const auth_controller_1 = __importDefault(require("../controllers/auth.controller"));
 const express_validator_1 = require("express-validator");
 const router = express_1.Router();
 router.post('/signup', [
@@ -27,7 +27,7 @@ router.post('/signup', [
         .trim()
         .not()
         .isEmpty()
-], auth_1.default.signup);
-router.post('/login', auth_1.default.login);
+], auth_controller_1.default.signup);
+router.post('/login', auth_controller_1.default.login);
 router.post('/holidays');
 exports.default = router;

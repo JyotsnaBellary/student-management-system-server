@@ -12,18 +12,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // import {  Error } from "../models/interfaces/request";
 const mongoose_1 = require("mongoose");
 const jwt = require('jsonwebtoken');
+let userInSession;
 const isAuthMiddle = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const token = req.header('Authorization');
-        const decodedToken = jwt.verify(token, 'somesupersecretsecret');
-        console.log(decodedToken);
-        // console.log(decodedToken['email']);
+        // console.log("Inside auth check", token);
+        // const decodedToken = jwt.verify(token, 'somesupersecretsecret');
+        const decodedToken = jwt.verify(token === null || token === void 0 ? void 0 : token.split(' ')[1], 'somesupersecretsecret');
+        // console.log(decodedToken);
+        console.log(decodedToken['role']);
+        userInSession = decodedToken['userId'];
         next();
     }
     catch (err) {
         console.log(err);
         const error = new mongoose_1.Error('Not authenticated');
-        throw error;
+        // throw error;
     }
 });
 module.exports = isAuthMiddle;
