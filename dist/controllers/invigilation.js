@@ -4,7 +4,7 @@ const express_validator_1 = require("express-validator");
 const invigilationDetails_model_1 = require("../models/invigilationDetails.model");
 const invigilationController = {
     addInvigilation(req, res, next) {
-        const errors = (0, express_validator_1.validationResult)(req);
+        const errors = express_validator_1.validationResult(req);
         if (!errors.isEmpty()) {
             console.log(errors.array());
         }
@@ -40,7 +40,7 @@ const invigilationController = {
         });
     },
     getInvigilationDetails(req, res, next) {
-        const errors = (0, express_validator_1.validationResult)(req);
+        const errors = express_validator_1.validationResult(req);
         if (!errors.isEmpty()) {
             console.log(errors.array());
         }
@@ -61,7 +61,7 @@ const invigilationController = {
         });
     },
     updateInvigilationDetails(req, res, next) {
-        const errors = (0, express_validator_1.validationResult)(req);
+        const errors = express_validator_1.validationResult(req);
         if (!errors.isEmpty()) {
             console.log(errors.array());
         }

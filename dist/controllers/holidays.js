@@ -9,7 +9,7 @@ const holidayController = {
     // http://localhost:8080/holiday
     addHoliday(req, res, next) {
         console.log('inside holiday post');
-        const errors = (0, express_validator_1.validationResult)(req);
+        const errors = express_validator_1.validationResult(req);
         if (!errors.isEmpty()) {
             //     console.log("errors")
             console.log(errors.array());

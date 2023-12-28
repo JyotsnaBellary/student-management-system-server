@@ -7,7 +7,7 @@ const userDetailsController = {
     //     // http://localhost:8080/details
     postUserDetails(req, res, next) {
         //         console.log('inside userdetails post')
-        const errors = (0, express_validator_1.validationResult)(req);
+        const errors = express_validator_1.validationResult(req);
         if (!errors.isEmpty()) {
             console.log(errors.array());
         }
@@ -59,7 +59,7 @@ const userDetailsController = {
         });
     },
     getUserDetails(req, res, next) {
-        const errors = (0, express_validator_1.validationResult)(req);
+        const errors = express_validator_1.validationResult(req);
         if (!errors.isEmpty()) {
             console.log(errors.array());
         }

@@ -4,7 +4,7 @@ const express_validator_1 = require("express-validator");
 const examinationDetails_model_1 = require("../models/examinationDetails.model");
 const examinationController = {
     addExamination(req, res, next) {
-        const errors = (0, express_validator_1.validationResult)(req);
+        const errors = express_validator_1.validationResult(req);
         if (!errors.isEmpty()) {
             console.log(errors.array());
         }
@@ -43,7 +43,7 @@ const examinationController = {
         }
     },
     getExaminationDetails(req, res, next) {
-        const errors = (0, express_validator_1.validationResult)(req);
+        const errors = express_validator_1.validationResult(req);
         if (!errors.isEmpty()) {
             console.log(errors.array());
         }
@@ -64,7 +64,7 @@ const examinationController = {
         });
     },
     updateExaminationDetails(req, res, next) {
-        const errors = (0, express_validator_1.validationResult)(req);
+        const errors = express_validator_1.validationResult(req);
         if (!errors.isEmpty()) {
             console.log(errors.array());
         }

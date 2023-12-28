@@ -13,7 +13,7 @@ const user_model_1 = require("../models/user.model");
 const authController = {
     signup(req, res, next) {
         console.log('inside signip');
-        const errors = (0, express_validator_1.validationResult)(req);
+        const errors = express_validator_1.validationResult(req);
         if (!errors.isEmpty()) {
             //     console.log("errors")
             console.log(errors.array());

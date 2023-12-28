@@ -12,7 +12,7 @@ const invigilation_router_1 = __importDefault(require("./routes/invigilation.rou
 const examination_router_1 = __importDefault(require("./routes/examination.router"));
 const userDetails_router_1 = __importDefault(require("./routes/userDetails.router"));
 const library_router_1 = __importDefault(require("./routes/library.router"));
-const app = (0, express_1.default)();
+const app = express_1.default();
 // app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
 app.use(body_parser_1.default.json()); // application/json
 app.use(auth_router_1.default);

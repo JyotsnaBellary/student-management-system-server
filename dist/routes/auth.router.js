@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const auth_1 = __importDefault(require("../controllers/auth"));
 const express_validator_1 = require("express-validator");
-const router = (0, express_1.Router)();
+const router = express_1.Router();
 router.post('/signup', [
-    (0, express_validator_1.body)('email')
+    express_validator_1.body('email')
         .isEmail()
         .withMessage('Please enter a valid email.')
         //   .custom((value, { req }) => {
@@ -20,10 +20,10 @@ router.post('/signup', [
         //     });
         //   })
         .normalizeEmail(),
-    (0, express_validator_1.body)('password')
+    express_validator_1.body('password')
         .trim()
         .isLength({ min: 5 }),
-    (0, express_validator_1.body)('role')
+    express_validator_1.body('role')
         .trim()
         .not()
         .isEmpty()

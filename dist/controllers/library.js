@@ -5,7 +5,7 @@ const book_model_1 = require("../models/book.model");
 const library_model_1 = require("../models/library.model");
 const libraryController = {
     postBooks(req, res, next) {
-        const errors = (0, express_validator_1.validationResult)(req);
+        const errors = express_validator_1.validationResult(req);
         if (!errors.isEmpty()) {
             console.log(errors.array());
         }
@@ -47,7 +47,7 @@ const libraryController = {
         });
     },
     getBooks(req, res, next) {
-        const errors = (0, express_validator_1.validationResult)(req);
+        const errors = express_validator_1.validationResult(req);
         if (!errors.isEmpty()) {
             console.log(errors.array());
         }
@@ -68,7 +68,7 @@ const libraryController = {
         });
     },
     borrowBook(req, res, next) {
-        const errors = (0, express_validator_1.validationResult)(req);
+        const errors = express_validator_1.validationResult(req);
         if (!errors.isEmpty()) {
             console.log(errors.array());
         }

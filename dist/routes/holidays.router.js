@@ -7,7 +7,7 @@ const express_1 = require("express");
 const holidays_1 = __importDefault(require("../controllers/holidays"));
 // import { isAuthMiddle } from '../middleware/isAuth';
 const authMiddleLayer = require('../middleware/isAuth');
-const router = (0, express_1.Router)();
+const router = express_1.Router();
 router.post('/holiday', authMiddleLayer, holidays_1.default.addHoliday);
 //   router.post('/holiday', holidayController.addHoliday)
 // http://localhost:8080/holidays
